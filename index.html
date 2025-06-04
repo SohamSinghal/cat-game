@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Bathing Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🛁 Cat Bathing Game 🐱</h1>
+        
+        <div class="setup-screen" id="setupScreen">
+            <h2>Choose Your Cat!</h2>
+            <div class="cat-selection">
+                <div class="cat-option" data-cat="black">
+                    <span class="cat-emoji">🐱</span>
+                    <div>Black Cat</div>
+                </div>
+                <div class="cat-option" data-cat="orange">
+                    <span class="cat-emoji">🧡</span>
+                    <div>Orange Cat</div>
+                </div>
+            </div>
+            
+            <div class="name-input">
+                <input type="text" id="catName" placeholder="Name your cat..." maxlength="15">
+            </div>
+            
+            <button class="start-btn" id="startBtn" disabled>Start Bathing!</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div class="game-screen" id="gameScreen">
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-label">Cat</div>
+                    <div id="displayName">Fluffy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Happiness</div>
+                    <div class="hearts" id="hearts">💙💙💙</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Bathing Progress</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div id="progressText">0%</div>
+                </div>
+            </div>
+
+            <div class="cat-display" id="catDisplay">
+                <div id="catBox">
+                    <div class="cat" id="catContainer">
+                        <div class="head">
+                            <div class="ears">
+                                <div class="ear left"></div>
+                                <div class="ear right"></div>
+                            </div>
+                            <div class="eyes">
+                                <div class="eye left"></div>
+                                <div class="eye right"></div>
+                            </div>
+                            <div class="muzzle">
+                                <div class="nose"></div>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="paw"></div>
+                        </div>
+                        <div class="tail">
+                            <div class="tail-segment">
+                                <div class="tail-segment">
+                                    <div class="tail-segment">
+                                        <div class="tail-segment">
+                                            <div class="tail-segment">
+                                                <div class="tail-segment">
+                                                    <div class="tail-segment">
+                                                        <div class="tail-segment">
+                                                            <div class="tail-segment">
+                                                                <div class="tail-segment">
+                                                                    <div class="tail-segment">
+                                                                        <div class="tail-segment">
+                                                                            <div class="tail-segment">
+                                                                                <div class="tail-segment">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialogue-box" id="dialogueBox">
+                Welcome! Let's get your cat clean and happy! 🛁
+            </div>
+            <div class="tools-container">
+                <button class="tool-btn" data-tool="shampoo">
+                    <span class="tool-emoji">🧴</span>
+                    Shampoo 
+                </button>
+                <button class="tool-btn" data-tool  ="loofah">
+                    <span class="tool-emoji">🧽</span>
+                    Loofah
+                </button>
+                <button class="tool-btn" data-tool  ="shower">
+                    <span class="tool-emoji">🚿</span>
+                    Shower
+                </button>
+                <button class="tool-btn" data-tool="dryer">
+                    <span class="tool-emoji">💨</span>
+                    Hair Dryer
+                </button>
+                <button class="tool-btn" data-tool="brush">
+                    <span class="tool-emoji">🪮</span>
+                    Brush
+                </button>
+                <button class="treat-btn" id="treatBtn">
+                    🍖 Give Treat
+                </button>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div class="game-over" id="gameOver">
+        <div class="game-over-content">
+            <h2 id="gameOverTitle">Game Over!</h2>
+            <p id="gameOverMessage"></p>
+            <button class="restart-btn" onclick="restartGame()">Play Again</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
