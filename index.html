@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Bathing Game</title>
+    <title>THAT time in a cats life</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-container">
-        <h1>🛁 Cat Bathing Game 🐱</h1>
-        
+        <h1>🛁 THAT time in a cats life 🐱</h1>
         <div class="setup-screen" id="setupScreen">
             <h2>Choose Your Cat!</h2>
             <div class="cat-selection">
                 <div class="cat-option" data-cat="black">
-                    <span class="cat-emoji">🐱</span>
+                    <span class="cat-emoji">🐈‍⬛</span>
                     <div>Black Cat</div>
                 </div>
                 <div class="cat-option" data-cat="orange">
-                    <span class="cat-emoji">🧡</span>
+                    <span class="cat-emoji">🐈</span>
                     <div>Orange Cat</div>
                 </div>
             </div>
@@ -26,7 +25,17 @@
             <div class="name-input">
                 <input type="text" id="catName" placeholder="Name your cat..." maxlength="15">
             </div>
-            
+            <details class="instructions-toggle">
+    <summary>📜 Instructions cause you dumb hooman 💩</summary>
+    <ul class="instructions-list">
+        <li>🐾 Pick a floofy baby (aka cat, duh).</li>
+        <li>📝 Name it something adorable... or suffer the sass 😾.</li>
+        <li>🛁 Smash that “Start Bathing!” button to begin torture 💦.</li>
+        <li>🧴 Use the tools in the RIGHT order, or face feline wrath 🔪🐱.</li>
+        <li>🍖 Spam treats if you wanna survive 🧡.</li>
+    </ul>
+</details>
+
             <button class="start-btn" id="startBtn" disabled>Start Bathing!</button>
         </div>
 
@@ -127,14 +136,11 @@
                     Brush
                 </button>
                 <button class="treat-btn" id="treatBtn">
-                    🍖 Give Treat
+                    🐟 Give Treat
                 </button>
-            </div>
-
-            
+            </div> 
         </div>
     </div>
-
     <!-- Game Over Modal -->
     <div class="game-over" id="gameOver">
         <div class="game-over-content">

@@ -1,47 +1,4 @@
 // ------------------------------
-// 0) Inject necessary CSS for rain, confetti, and button fade-in
-// ------------------------------
-(function injectOverlayStyles() {
-  const css = `
-    /* Rain overlay */
-    .rain {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      background-image:
-        linear-gradient(to bottom, transparent 0%, transparent 70%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0.3) 75%, transparent 75%);
-      background-size: 2px 10px;
-      animation: rain-fall 0.5s linear infinite;
-      z-index: 1000;
-    }
-    @keyframes rain-fall {
-      0%   { background-position: 0 0; }
-      100% { background-position: 0 100%; }
-    }
-    /* Confetti pieces */
-    .confetti-piece {
-      position: absolute;
-      top: -10px;
-      width: 8px; height: 8px;
-      opacity: 0.9;
-      animation: confetti-fall 3s linear infinite;
-      z-index: 1000;
-    }
-    @keyframes confetti-fall {
-      to { transform: translateY(100vh) rotate(360deg); }
-    }
-    /* Fade-in for Play Again button */
-    .fade-in {
-      opacity: 0;
-    }
-  `;
-  const style = document.createElement('style');
-  style.textContent = css;
-  document.head.append(style);
-})();
-
-// ------------------------------
 // 1) Preload / define all audio arrays
 // ------------------------------
 const soundFiles = {
@@ -85,46 +42,46 @@ let gameState = {
   progress: 0,
   usedTools: new Set(),
   gameActive: false,
-  currentStep: 0, // Track bathing sequence
-  catState: 'normal' // normal, soapy, wet, fluffy, clean
+  currentStep: 0,
+  catState: 'normal' 
 };
 
 const dialogues = {
   tool: [
-    "Meow! That tickles!",
-    "I'm not sure about this...",
-    "This is actually kind of nice!",
-    "Can we be done soon?",
-    "I suppose this is necessary...",
-    "Purr... okay, I guess this is fine",
-    "Is it treat time yet?",
-    "I'd rather be napping...",
-    "This feels weird but okay",
-    "I'm being so good right now!"
+    "Meow! Bitch that tickles 🐾😹",
+    "Uh-uh, fluff no, not my belly!! 😾",
+    "You tryna fight? 🥊 Touch my fur again, I dare you 😼",
+    "WTF is this? A spa day from hell?! 💦🙀",
+    "This wasn't in the contract, hooman!! 📄😾",
+    "Purr... okay fine, I tolerate u... for now 😼💕",
+    "It do be treat time yet? Wait, YOU don't decide that. Hand me my treats 🤬🍗",
+    "I'd rather be napping, hooman. Go touch grass 😴🌱",
+    "What the fluff is this tool even?! 🚿😿",
+    "Chop chop, let's get this over with, peasant 😼🧼"
   ],
   treat: [
-    "Yum yum yum! 😸",
-    "This makes everything better!",
-    "I love treats! Purr purr!",
-    "More please! 🐾",
-    "You're the best human ever!",
-    "This is why I tolerate baths!",
-    "Treats make me so happy!",
-    "I could get used to this!",
-    "Best part of bath time!",
-    "Nom nom nom! 😋"
+    "YUM YUM YUM 🐟😸",
+    "Mmmm... bribery accepted 🍤💅",
+    "This shit SLAPS 🐾🔥",
+    "More or I riot 😤🍗",
+    "You ARE annoying, but damn u good with snacks 😽💕",
+    "This is the ONLY reason I tolerate your nonsense 😾🍣",
+    "Treats = forgiveness. For now 😼🧁",
+    "I could live this soft life forever 😎🍰",
+    "Ughhh fine, you're not the worst (You are but treats) 🥹💖",
+    "Nom nom nom motherfluffer 😋🐾"
   ],
   wrong_order: [
-    "Have you ever bathed a cat before?",
-    "That's not how you do it!",
-    "Wrong order, silly human!",
-    "Do you even know what you're doing?",
-    "That's not the right step!",
-    "Are you trying to confuse me?",
-    "Let's follow the proper steps, please!",
-    "I'm not sure that's how bathing works...",
-    "Maybe read the instructions first?",
-    "That doesn't make sense right now!"
+    "Yo dumbass... have u EVER bathed a cat before?? 🫠🛁",
+    "Nah nopes, that ain't it 😾📉",
+    "Wrong order, dumb hooman 🤦‍♀️🫧",
+    "Who gave u a license to cat-care?! 💢🚫",
+    "That's not the step, you chaotic gremlin 😤🧼",
+    "Bitch are you just WINGING it?? 🤯",
+    "Let's follow the goddamn steps, yeah? 📋😒",
+    "This ain't Pinterest, this my fur we talkin bout!! 😾📸",
+    "Did you even read the fluffing instructions, hooman?! 🧠❌",
+    "Are you TRYNA get scratched?! 🔪🔪"
   ]
 };
 
