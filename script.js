@@ -21,7 +21,6 @@ const soundFiles = {
     sad:   'assets/sad final/sad_final.mp3'
   }
 };
-
 function playRandom(category) {
   const arr = soundFiles[category];
   if (!arr || arr.length === 0) return;
@@ -31,7 +30,6 @@ function playRandom(category) {
   audio.play();
   return audio;
 }
-
 // ------------------------------
 // 2) Game State & Dialogues
 // ------------------------------
@@ -45,7 +43,6 @@ let gameState = {
   currentStep: 0,
   catState: 'normal' 
 };
-
 const dialogues = {
   tool: [
     "Meow! Bitch that tickles 🐾😹",
@@ -84,7 +81,6 @@ const dialogues = {
     "Are you TRYNA get scratched?! 🔪🔪"
   ]
 };
-
 const bathingSequence = ['shampoo', 'loofah', 'shower', 'dryer', 'brush'];
 const sequenceNames = {
   shampoo: 'Shampoo',
@@ -93,7 +89,6 @@ const sequenceNames = {
   dryer:   'Hair Dryer',
   brush:   'Brush'
 };
-
 // ------------------------------
 // 3) DOM Elements
 // ------------------------------
@@ -115,21 +110,17 @@ const gameOver        = document.getElementById('gameOver');
 const gameOverTitle   = document.getElementById('gameOverTitle');
 const gameOverMessage = document.getElementById('gameOverMessage');
 const restartBtn      = document.querySelector('.restart-btn');
-
 // ------------------------------
 // 4) Event Listeners
 // ------------------------------
 catOptions.forEach(option => {
   option.addEventListener('click', () => selectCat(option.dataset.cat));
 });
-
 catNameInput.addEventListener('input', updateStartButton);
 startBtn.addEventListener('click', startGame);
-
 toolBtns.forEach(btn => {
   btn.addEventListener('click', () => useTool(btn.dataset.tool));
 });
-
 treatBtn.addEventListener('click', giveTreat);
 restartBtn.addEventListener('click', restartGame);
 
@@ -146,7 +137,6 @@ function selectCat(catType) {
   });
   updateStartButton();
 }
-
 function updateStartButton() {
   const hasName = catNameInput.value.trim().length > 0;
   const hasCat  = gameState.selectedCat !== null;
@@ -161,38 +151,30 @@ function startGame() {
   gameState.gameActive = true;
   gameState.currentStep= 0;
   gameState.catState   = 'normal';
-  
   setupScreen.style.display = 'none';
   gameScreen.style.display  = 'block';
-  
   displayName.textContent = gameState.catName;
-  
   // Set cat color
   if (gameState.selectedCat === 'orange') {
     catContainer.classList.add('orange');
   } else {
     catContainer.classList.remove('orange');
   }
-  
   updateUI();
   updateCatAppearance();
 }
 
 function useTool(tool) {
   if (!gameState.gameActive) return;
-  
   const expectedTool = bathingSequence[gameState.currentStep];
-  
   // Wrong tool → angry sound + wrong-message
   if (tool !== expectedTool) {
     playRandom('angry');
     showDialogue(dialogues.wrong_order);
     return;
   }
-  
   // Correct tool → sad sound
   playRandom('sad');
-  
   // Add 20% progress (5 tools = 100%)
   gameState.progress  = Math.min(100, gameState.progress + 20);
   // Reduce happiness
@@ -200,13 +182,11 @@ function useTool(tool) {
   // Mark tool used and advance step
   gameState.usedTools.add(tool);
   gameState.currentStep++;
-  
   // Update cat appearance
   updateCatState(tool);
   showDialogue(dialogues.tool);
   updateUI();
   updateCatAppearance();
-  
   // Win condition
   if (gameState.progress >= 100) {
     endGame(true);
@@ -239,10 +219,8 @@ function updateCatState(tool) {
 
 function updateCatAppearance() {
   catContainer.classList.remove('soapy', 'wet', 'fluffy');
-  
   const existingBubbles = catDisplay.querySelectorAll('.bubble');
   existingBubbles.forEach(b => b.remove());
-  
   switch (gameState.catState) {
     case 'soapy':
       catContainer.classList.add('soapy');
@@ -269,13 +247,10 @@ function addBubbles() {
 
 function giveTreat() {
   if (!gameState.gameActive || gameState.happiness >= 3) return;
-  
   playRandom('happy');
-  
   gameState.happiness = Math.min(3, gameState.happiness + 1);
   showDialogue(dialogues.treat);
   updateUI();
-  
   catDisplay.classList.add('happy');
   setTimeout(() => {
     catDisplay.classList.remove('happy');
@@ -286,12 +261,9 @@ function updateUI() {
   hearts.textContent = 
     '💙'.repeat(gameState.happiness) +
     '🤍'.repeat(3 - gameState.happiness);
-  
   progressFill.style.width = gameState.progress + '%';
   progressText.textContent = gameState.progress + '%';
-  
   treatBtn.disabled = gameState.happiness >= 3 || !gameState.gameActive;
-  
   toolBtns.forEach(btn => {
     const tool = btn.dataset.tool;
     const used = gameState.usedTools.has(tool);
@@ -314,27 +286,21 @@ function showDialogue(dialogueArray) {
 
 function endGame(won) {
   gameState.gameActive = false;
-  
   // Hide any existing overlays
   removeOverlay('rain');
   removeOverlay('confetti');
-  
   // Prepare the Play Again button to fade in
   restartBtn.style.display = 'inline-block';
   restartBtn.classList.add('fade-in');
   restartBtn.style.opacity = '0';
   restartBtn.disabled = true;
-  
   // Show the modal
   gameOver.style.display = 'flex';
-  
   if (won) {
     gameOverTitle.textContent   = 'Congratulations! 🎉';
     gameOverMessage.textContent = 'Your cat is squeaky clean. You deserve a treat!';
-    
     // Trigger confetti overlay
     launchConfetti();
-    
     // Play happy-final audio and fade in button over duration
     const audio = new Audio(soundFiles.final.happy);
     audio.volume = 0.6;
@@ -352,10 +318,8 @@ function endGame(won) {
   } else {
     gameOverTitle.textContent   = 'Game Over 😿';
     gameOverMessage.textContent = `${gameState.catName} was too sad. Try giving treats!`;
-    
     // Trigger rain overlay
     createRain();
-    
     // Play sad-final audio and fade in button over duration
     const audio = new Audio(soundFiles.final.sad);
     audio.volume = 0.6;
@@ -376,27 +340,22 @@ function restartGame() {
   // Remove overlays
   removeOverlay('rain');
   removeOverlay('confetti');
-  
   gameOver.style.display    = 'none';
   gameScreen.style.display  = 'none';
   setupScreen.style.display = 'block';
-  
   catOptions.forEach(option => option.classList.remove('selected'));
   catNameInput.value       = '';
   gameState.selectedCat    = null;
   gameState.currentStep    = 0;
   gameState.catState       = 'normal';
   updateStartButton();
-  
   catContainer.classList.remove('soapy', 'wet', 'fluffy', 'orange');
   const existingBubbles = catDisplay.querySelectorAll('.bubble');
   existingBubbles.forEach(bubble => bubble.remove());
-  
   toolBtns.forEach(btn => {
     btn.style.opacity = '1';
     btn.textContent   = btn.textContent.replace(' ✓', '');
   });
-  
   dialogueBox.textContent = "Welcome! Let's get your cat clean and happy! 🛁";
 }
 
@@ -405,7 +364,6 @@ function restartGame() {
 // ------------------------------
 function createRain() {
   removeOverlay('rain');
-  
   // Create canvas for rain animation
   const canvas = document.createElement('canvas');
   canvas.id = 'rainCanvas';
@@ -420,7 +378,6 @@ function createRain() {
   canvas.style.zIndex = '1000';
   canvas.dataset.overlay = 'rain';
   document.body.append(canvas);
-  
   if(canvas.getContext) {
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
@@ -428,7 +385,6 @@ function createRain() {
     ctx.strokeStyle = 'rgba(174,194,224,0.5)';
     ctx.lineWidth = 1;
     ctx.lineCap = 'round';
-    
     const init = [];
     const maxParts = 1000;
     for(let a = 0; a < maxParts; a++) {
@@ -440,12 +396,10 @@ function createRain() {
         ys: Math.random() * 10 + 10
       });
     }
-    
     const particles = [];
     for(let b = 0; b < maxParts; b++) {
       particles[b] = init[b];
     }
-    
     function draw() {
       ctx.clearRect(0, 0, w, h);
       for(let c = 0; c < particles.length; c++) {
@@ -457,7 +411,6 @@ function createRain() {
       }
       move();
     }
-    
     function move() {
       for(let b = 0; b < particles.length; b++) {
         const p = particles[b];
@@ -469,7 +422,6 @@ function createRain() {
         }
       }
     }
-    
     // Store interval ID on canvas for cleanup
     canvas.rainInterval = setInterval(draw, 30);
   }
@@ -477,7 +429,6 @@ function createRain() {
 
 function launchConfetti() {
   removeOverlay('confetti');
-  
   // Create canvas for confetti animation
   const canvas = document.createElement('canvas');
   canvas.id = 'confettiCanvas';
@@ -492,7 +443,6 @@ function launchConfetti() {
   canvas.style.zIndex = '1000';
   canvas.dataset.overlay = 'confetti';
   document.body.append(canvas);
-  
   const ctx = canvas.getContext('2d');
   const cx = ctx.canvas.width/2;
   const cy = ctx.canvas.height/2;
@@ -511,9 +461,7 @@ function launchConfetti() {
     { front : 'purple', back: 'darkpurple'},
     { front : 'turquoise', back: 'darkturquoise'},
   ];
-  
   const randomRange = (min, max) => Math.random() * (max - min) + min;
-  
   const initConfetti = () => {
     for (let i = 0; i < confettiCount; i++) {
       confetti.push({
@@ -538,27 +486,22 @@ function launchConfetti() {
       });
     }
   };
-  
+
   const render = () => {  
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
     confetti.forEach((confetto, index) => {
       let width = (confetto.dimensions.x * confetto.scale.x);
       let height = (confetto.dimensions.y * confetto.scale.y);
-      
       // Move canvas to position and rotate
       ctx.translate(confetto.position.x, confetto.position.y);
       ctx.rotate(confetto.rotation);
-      
       // Apply forces to velocity
       confetto.velocity.x -= confetto.velocity.x * drag;
       confetto.velocity.y = Math.min(confetto.velocity.y + gravity, terminalVelocity);
       confetto.velocity.x += Math.random() > 0.5 ? Math.random() : -Math.random();
-      
       // Set position
       confetto.position.x += confetto.velocity.x;
       confetto.position.y += confetto.velocity.y;
-      
       // Delete confetti when out of frame
       if (confetto.position.y >= canvas.height) confetti.splice(index, 1);
       // Loop confetto x position
@@ -567,14 +510,11 @@ function launchConfetti() {
       // Spin confetto by scaling y
       confetto.scale.y = Math.cos(confetto.position.y * 0.1);
       ctx.fillStyle = confetto.scale.y > 0 ? confetto.color.front : confetto.color.back;
-       
       // Draw confetto
       ctx.fillRect(-width / 2, -height / 2, width, height);
-      
       // Reset transform matrix
       ctx.setTransform(1, 0, 0, 1, 0, 0);
     });
-    
     // Check if canvas still exists before continuing animation
     if (document.body.contains(canvas)) {
       // Fire off another round of confetti
@@ -582,12 +522,10 @@ function launchConfetti() {
       canvas.confettiAnimationId = requestAnimationFrame(render);
     }
   };
-  
   // Start the confetti animation
   initConfetti();
   canvas.confettiAnimationId = requestAnimationFrame(render);
 }
-
 function removeOverlay(type) {
   document.querySelectorAll(`[data-overlay="${type}"]`).forEach(el => {
     // Clean up rain animation interval if removing rain
